@@ -1,0 +1,59 @@
+# commentaires
+0:0:Well Oriented:Well Permuted:Id
+0:1:Well Oriented:J perm:RUR'F'(RUR'U')R'FR2U'R
+0:2:Well Oriented:Y perm:FRU'R'U'RUR'F'(RUR'U')(R'FRF')
+
+1:0:Anti-Sune:Left Paired:(U')R'U'RU'LU'R'UL'U2R
+1:1:Anti-Sune:Right Paired:(U)(R'U'RU'R'U2R)
+1:2:Anti-Sune:Forward Slash:(U')(L'URU'LUR')
+1:3:Anti-Sune:Back Slash:(x')FU'RUL'U2R'U2r
+1:4:Anti-Sune:Columns:(U')R2DR'URD'R'UR'U'RU'R'
+1:5:Anti-Sune:X Case:(U')RU2R'U2(R'FRF')
+
+2:0:Sune:Left Paired:(U)(RUR'URU2R')
+2:1:Sune:Right Paired:(U')RUR'UL'URU'LU2R'
+2:2:Sune:Forward Slash:(U)(x)UR'U'LU2RU2r'
+2:3:Sune:Back Slash:(U)(RU'L'UR'U'L)
+2:4:Sune:Columns:(U)(RUR'U')(R'FRF')(RUR'URU2R')
+2:5:Sune:X Case:(U)R'F2RU2rU'L'U(x')
+
+3:0:Bow Tie:Left Paired:(U2)RU2R'U'(RUR'U')2RU'R'
+3:1:Bow Tie:Back Slash:(U')rURU'L'UR'U'(x')
+3:2:Bow Tie:X Case:(U')R'U2R'D'RU2R'DR2
+3:3:Bow Tie:Forward Slash:R'U'RU2L'UR'U'LU'R
+3:4:Bow Tie:Columns:(U2)l'U'L'URU'LU(x')
+3:5:Bow Tie:Right Paired:(U2)l'U2RU'r'U2(x')R2U'R'
+
+
+
+4:0:Headlights:Back Paired:(U')F(RUR'U')F'
+4:1:Headlights:Front Paired:(R'U'RU'R'U2R) (RUR'URU2R')
+4:2:Headlights:Forward Slash:(U2)R2DR'U2RD'R'U2R'
+4:3:Headlights:Back Slash:R2D'RU2R'DRU2R
+4:4:Headlights:Columns:(U')FR2DR'URD'R2U'F'
+4:5:Headlights:X Case:(U2)R'FU'RFR'URF'
+
+
+5:0:Blinkers:Left Paired:(U')(RUR'U')(R'FRF')
+5:1:Blinkers:Right Paired:(U')R'U'RULU'R'U(x)
+5:2:Blinkers:Rows:RU2R'U'RU'R2U2RUR'UR
+5:3:Blinkers:Columns:R'UR2Dr'U2rD'R2U'R
+5:4:Blinkers:Back Paired:FU'L'UR2U'LUR2F'
+5:5:Blinkers:Front Paired:R'UrU2R2FRF'R
+
+
+6:0:Bruno:Left Paired:(U2)RUR'URU'(y)RU'R'(y')R'
+6:1:Bruno:Right Paired:F(RUR'U')2F'
+6:2:Bruno:Back Slash:(R'U'RU'R'U2R)U'(L'URU'LUR')
+6:3:Bruno:Forward Slash:(RUR'URU2R')U'(RU'L'UR'U'L)
+6:4:Bruno:Columns:RU'L'UR'ULUL'UL
+6:5:Bruno:X Case:l'U2(y)RU2R'U2R'U2(y)r
+
+7:0:Sune:Columns:RU2R'U'(RUR'U')RU'R'
+7:1:Sune:Rows:F(RUR'U')3F'
+7:2:Sune:Front Paired:(U')RUR'URUL'UR'U'L
+7:3:Sune:Right Paired:l'U2(y)RU2RU2R'U2(y)r
+
+
+
+
