@@ -1,14 +1,20 @@
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 class cmll {
  public:
   std::vector<std::string> orientation;
   std::vector<std::string> permutation;
+  std::vector<unsigned int> o_id;
+  std::vector<unsigned int> p_id;
   std::vector<std::string> alg;
+  std::vector< double > solvingtime;
   unsigned int number;
   
   cmll(unsigned int id_o, unsigned int id_p) {
@@ -28,12 +34,31 @@ class cmll {
 
   void displayAllCmll() {
     for(unsigned i=0; i<number; i++) {
-      std::cout << orientation[i] << " " << permutation[i] << " / " << alg[i] << std::endl;
+      std::cout << orientation[i] << " " << permutation[i] << " / " << alg[i] << " (" << solvingtime[i] << ")" << std::endl;
     }
   }
 
   std::string getSingleCmll(unsigned int i) {
     return orientation[i]+" "+permutation[i];
+  }
+
+  void setSolvingTime(unsigned int i, double t) {
+    solvingtime[i]=t;
+  }
+
+  void writeTime() {
+    checkDir("datas");
+    for(unsigned int i=0; i<number; i++) {
+      std::string filename="datas/solvingtimes."+NumberToString(o_id[i])+"."+NumberToString(p_id[i])+".txt";
+      struct stat info;
+      if( stat( filename.c_str(), &info ) != 0 ) {
+	std::cout << "Creating file: " << filename << std::endl;
+	std::ofstream f(filename.c_str());
+	if(f.is_open()) f << "# " << getSingleCmll(i) << "\n"; f.close();
+      }
+      std::ofstream f(filename.c_str(), std::ios::app);
+      if(f.is_open()) { f << solvingtime[i] << "\n"; f.close(); }
+    }
   }
 
  private:
@@ -45,7 +70,6 @@ class cmll {
     if(!ist) std::cout << "Can't open configuration file " << file_name << std::endl;
     std::string delimiter=":";
     std::string comment="#";
-
     for(std::string line; getline(ist, line); ) {
       if(line.compare(0,1,comment)!=0) {
 	size_t pos=0; std::string token;
@@ -62,38 +86,79 @@ class cmll {
   }
 
   void setSingleCmll(unsigned int id_o, unsigned int id_p) {
-    orientation.push_back("unset");
-    permutation.push_back("unset");
-    alg.push_back("unset");
+    resizeVectors(1);
+    orientation[0]="unknown"; permutation[0]="unknown"; alg[0]="unknown";
     for(unsigned int i=0; i<all_cmll.size(); i++) {
       if(std::atoi(all_cmll[i][0].c_str())==id_o && std::atoi(all_cmll[i][1].c_str())==id_p) {
-	orientation[0]=all_cmll[i][2];
-	permutation[0]=all_cmll[i][3];
-	alg[0]=all_cmll[i][4];
+	setVectors(0, all_cmll[i]);
+	break;
       }
     }
-    number=orientation.size();
   }
 
   void setAllCmll() {
     for(unsigned int i=0; i<all_cmll.size(); i++) {
-      orientation.push_back(all_cmll[i][2]);
-      permutation.push_back(all_cmll[i][3]);
-      alg.push_back(all_cmll[i][4]);
+      pushVectors(all_cmll[i]);
     }
     number=orientation.size();
   }
 
   void setRandomCmll(unsigned int n) {
-    orientation.resize(n); permutation.resize(n); alg.resize(n);
+    resizeVectors(n);
     srand ( time(NULL) );
     for(unsigned int i=0; i<n; i++) {
       unsigned int l=rand()%all_cmll.size();
-      orientation[i]=all_cmll[l][2];
-      permutation[i]=all_cmll[l][3];
-      alg[i]=all_cmll[l][4];
+      setVectors(i, all_cmll[l]);
     }
-    number=orientation.size();
+  }
+
+
+  void checkDir(const char *pathname) {
+    struct stat info;
+    if( stat( pathname, &info ) != 0 ) {
+      printf( "Creating folder: %s\n", pathname );
+      mkdir(pathname, 0755);
+    }
+    else if( info.st_mode & S_IFDIR )  // S_ISDIR() doesn't exist on my windows 
+      printf( "Folder %s alreaty exists\n", pathname );
+    else
+      printf( "%s is no directory\n", pathname );
+  }
+
+
+  void resizeVectors(unsigned int n) {
+    number=n;
+    o_id.resize(number);
+    p_id.resize(number);
+    permutation.resize(number);
+    orientation.resize(number);
+    alg.resize(number);
+    solvingtime.resize(number);
+  }
+
+  void setVectors(unsigned int i, std::vector<std::string> vec) {
+    o_id[i]=std::atoi(vec[0].c_str());
+    p_id[i]=std::atoi(vec[1].c_str());
+    orientation[i]=vec[2];
+    permutation[i]=vec[3];
+    alg[i]=vec[4];
+    solvingtime[i]=10.29;
+  }
+
+  void pushVectors(std::vector<std::string> vec) {
+    o_id.push_back(std::atoi(vec[0].c_str()));
+    p_id.push_back(std::atoi(vec[1].c_str()));
+    orientation.push_back(vec[2]);
+    permutation.push_back(vec[3]);
+    alg.push_back(vec[4]);
+    solvingtime.push_back(2.89);
+  }
+
+
+  template <typename T> std::string NumberToString ( T Number ) {
+    std::ostringstream oss (std::ostringstream::out);
+    oss << Number;
+    return oss.str();
   }
 
 };

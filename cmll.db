@@ -49,10 +49,10 @@
 6:4:Bruno:Columns:RU'L'UR'ULUL'UL
 6:5:Bruno:X Case:l'U2(y)RU2R'U2R'U2(y)r
 
-7:0:Sune:Columns:RU2R'U'(RUR'U')RU'R'
-7:1:Sune:Rows:F(RUR'U')3F'
-7:2:Sune:Front Paired:(U')RUR'URUL'UR'U'L
-7:3:Sune:Right Paired:l'U2(y)RU2RU2R'U2(y)r
+7:0:Double Headlights:Columns:RU2R'U'(RUR'U')RU'R'
+7:1:Double Headlights:Rows:F(RUR'U')3F'
+7:2:Double Headlights:Front Paired:(U')RUR'URUL'UR'U'L
+7:3:Double Headlights:Right Paired:l'U2(y)RU2RU2R'U2(y)r
 
 
 

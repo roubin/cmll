@@ -11,7 +11,9 @@
 int main()
 {
 
-  cmll c(10);
+  cmll c;
+  //  cmll c(10);
+
 
   std::cout << "Ready ?" << std::endl;
   std::string input;
@@ -26,9 +28,11 @@ int main()
       if(input=="") { 
 	t.stop();
 	std::cout << "Elapsed time: " << t.getElapsedTime() << " seconds" << std::endl << std::endl;
+	c.setSolvingTime(i, t.getElapsedTime());
       }
     } 
   }
+  c.writeTime();
 
   return 0;
 }
