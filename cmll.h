@@ -8,15 +8,9 @@
 #include <sys/stat.h>
 
 class cmll {
- public:
-  std::vector<std::string> orientation;
-  std::vector<std::string> permutation;
-  std::vector<unsigned int> o_id;
-  std::vector<unsigned int> p_id;
-  std::vector<std::string> alg;
-  std::vector< double > solvingtime;
+ public:  
   unsigned int number;
-  
+
   cmll(unsigned int id_o, unsigned int id_p) {
     readConf();
     setSingleCmll(id_o, id_p);
@@ -38,6 +32,13 @@ class cmll {
     }
   }
 
+  std::string getSingleAlg(unsigned int i){
+    return alg[i];
+  }
+  std::string getSingleAfterState(unsigned int i){
+    return afterstate[i];
+  }
+
   std::string getSingleCmll(unsigned int i) {
     return orientation[i]+" "+permutation[i];
   }
@@ -48,20 +49,31 @@ class cmll {
 
   void writeTime() {
     checkDir("datas");
+    std::cout << "Writing times\n";
     for(unsigned int i=0; i<number; i++) {
-      std::string filename="datas/solvingtimes."+NumberToString(o_id[i])+"."+NumberToString(p_id[i])+".txt";
-      struct stat info;
-      if( stat( filename.c_str(), &info ) != 0 ) {
-	std::cout << "Creating file: " << filename << std::endl;
-	std::ofstream f(filename.c_str());
-	if(f.is_open()) f << "# " << getSingleCmll(i) << "\n"; f.close();
+      if(solvingtime[i]>0.0) {
+	std::string filename="datas/solvingtimes."+NumberToString(o_id[i])+"."+NumberToString(p_id[i])+".txt";
+	struct stat info;
+	if( stat( filename.c_str(), &info ) != 0 ) {
+	  std::cout << "Creating file: " << filename << std::endl;
+	  std::ofstream f(filename.c_str());
+	  if(f.is_open()) f << "# " << getSingleCmll(i) << "\n"; f.close();
+	}
+	std::ofstream f(filename.c_str(), std::ios::app);
+	if(f.is_open()) { f << solvingtime[i] << "\n"; f.close(); }
       }
-      std::ofstream f(filename.c_str(), std::ios::app);
-      if(f.is_open()) { f << solvingtime[i] << "\n"; f.close(); }
     }
   }
 
  private:
+  std::vector<std::string> orientation;
+  std::vector<std::string> permutation;
+  std::vector<unsigned int> o_id;
+  std::vector<unsigned int> p_id;
+  std::vector<std::string> alg;
+  std::vector<std::string> afterstate;
+  std::vector< double > solvingtime;
+
   std::vector< std::vector< std::string > > all_cmll;
 
   void readConf() {
@@ -79,7 +91,7 @@ class cmll {
 	  line.erase(0, pos + delimiter.length());
 	}
 	tokens.push_back(line);
-	if(tokens.size()==5) all_cmll.push_back(tokens);
+	if(tokens.size()==6) { all_cmll.push_back(tokens); }
       }
     }
     if(ist) ist.close();
@@ -119,9 +131,7 @@ class cmll {
       printf( "Creating folder: %s\n", pathname );
       mkdir(pathname, 0755);
     }
-    else if( info.st_mode & S_IFDIR )  // S_ISDIR() doesn't exist on my windows 
-      printf( "Folder %s alreaty exists\n", pathname );
-    else
+    else if( !info.st_mode | !S_IFDIR )  // S_ISDIR() doesn't exist on my windows 
       printf( "%s is no directory\n", pathname );
   }
 
@@ -133,6 +143,7 @@ class cmll {
     permutation.resize(number);
     orientation.resize(number);
     alg.resize(number);
+    afterstate.resize(number);
     solvingtime.resize(number);
   }
 
@@ -142,7 +153,8 @@ class cmll {
     orientation[i]=vec[2];
     permutation[i]=vec[3];
     alg[i]=vec[4];
-    solvingtime[i]=10.29;
+    afterstate[i]=vec[5];
+    solvingtime[i]=-1.0;
   }
 
   void pushVectors(std::vector<std::string> vec) {
@@ -151,7 +163,8 @@ class cmll {
     orientation.push_back(vec[2]);
     permutation.push_back(vec[3]);
     alg.push_back(vec[4]);
-    solvingtime.push_back(2.89);
+    afterstate.push_back(vec[5]);
+    solvingtime.push_back(-1.0);
   }
 
 
