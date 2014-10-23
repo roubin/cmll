@@ -6,7 +6,7 @@ set xzeroaxis
 set yzeroaxis
 
 set ylabel "Time [s]"
-set xlabel "cmll"
+set xlabel "iteration"
 set xtics nomirror
 set ytics nomirror
 
@@ -43,6 +43,12 @@ set term postscrip eps color;
 
 file_exists(file) = system("[ -f '".file."' ] && echo '1' || echo '0'") + 0
 
+
+set key hor outside
+set output "timeVSiter.eps"
+plot for [i=1:words(cmlls)] filename(word(cmlls, i), "txt") u 0:1 title word(names, i) w lp
+
+
 f(x)=a*x+b;
 max_avg=1.0;
 avg_tot=0.0;
@@ -51,7 +57,7 @@ n_avg=0;
 do for [i=1:words(cmlls)] {
    if (file_exists(filename(word(cmlls,i), "txt"))) {
      stats filename(word(cmlls,i), "txt") u 0:1
-     set output filename(word(cmlls, i), "eps"); plot filename(word(cmlls, i), "txt") u 0:1 title word(names, i) w lp lw 6 lc rgb "#00060ad"
+     #set output filename(word(cmlls, i), "eps"); plot filename(word(cmlls, i), "txt") u 0:1 title word(names, i) w lp lw 6 lc rgb "#00060ad"
      avg=STATS_sum_y/STATS_records
      set object rect from i-0.9,0 to sprintf("%f", i-0.1) ,avg fc rgb word(colors,i)
      if (max_avg<avg) { max_avg=avg; avg_tot=avg_tot+avg; n_avg=n_avg+1; }
@@ -59,6 +65,7 @@ do for [i=1:words(cmlls)] {
 }
 
 set xrange [0:43]
+set xlabel "cmll"
 set yrange [0:max_avg*(1.1)]
 set xtics (word(names,1) 0.5); do for [i=2:words(names)] { set xtics add (word(names,i) i-0.5) } 
 set xtics rotate by 90 right
@@ -66,7 +73,9 @@ set grid ytics
 
 #set ytics .5
 
-set output "plot.eps"; plot avg_tot/n_avg notitle w l lw 2
+set output "timeVScmll.eps"; plot avg_tot/n_avg notitle w l lw 2
+
+
 
 
 set output

@@ -35,8 +35,8 @@ class cmll {
   std::string getSingleAlg(unsigned int i){
     return alg[i];
   }
-  std::string getSingleAfterState(unsigned int i){
-    return afterstate[i];
+  std::string getSingleSetupMove(unsigned int i){
+    return setupmove[i];
   }
 
   std::string getSingleCmll(unsigned int i) {
@@ -71,7 +71,7 @@ class cmll {
   std::vector<unsigned int> o_id;
   std::vector<unsigned int> p_id;
   std::vector<std::string> alg;
-  std::vector<std::string> afterstate;
+  std::vector<std::string> setupmove;
   std::vector< double > solvingtime;
 
   std::vector< std::vector< std::string > > all_cmll;
@@ -143,7 +143,7 @@ class cmll {
     permutation.resize(number);
     orientation.resize(number);
     alg.resize(number);
-    afterstate.resize(number);
+    setupmove.resize(number);
     solvingtime.resize(number);
   }
 
@@ -153,7 +153,7 @@ class cmll {
     orientation[i]=vec[2];
     permutation[i]=vec[3];
     alg[i]=vec[4];
-    afterstate[i]=vec[5];
+    setupmove[i]=vec[5];
     solvingtime[i]=-1.0;
   }
 
@@ -163,7 +163,7 @@ class cmll {
     orientation.push_back(vec[2]);
     permutation.push_back(vec[3]);
     alg.push_back(vec[4]);
-    afterstate.push_back(vec[5]);
+    setupmove.push_back(vec[5]);
     solvingtime.push_back(-1.0);
   }
 

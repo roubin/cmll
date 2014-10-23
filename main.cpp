@@ -11,23 +11,21 @@
 int main()
 {
 
-  //cmll c;
   cmll c(10);
 
-  std::cout << "Ready ?";
-  std::string input;
-  std::getline(std::cin, input);
   for(unsigned int i=0; i<c.number; i++) {
+    std::cout << "Setup move [ " << c.getSingleSetupMove(i) << " ]\n Ready?";
+    std::string input;
+    std::getline(std::cin, input);
     if(input=="") { 
-      std::cout << "******* [ " << c.getSingleCmll(i) << " ] *******";
       chrono t;
       t.start();
       std::string input;
       std::getline(std::cin, input);
       if(input=="") { 
 	t.stop();
+	std::cout << "Your cmll was: " << c.getSingleCmll(i) << std::endl;
 	std::cout << "The solution was: " << c.getSingleAlg(i) << std::endl;
-	std::cout << "Your current state should be: " << c.getSingleAfterState(i) << std::endl;
 	std::cout << "Did you get it write (Y/n): ";
 	std::getline(std::cin, input);
 	  if(input=="n") {
@@ -40,6 +38,7 @@ int main()
     } 
   }
   c.writeTime();
+
 
   return 0;
 }
